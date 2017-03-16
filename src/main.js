@@ -1,34 +1,38 @@
 const THREE = require('three')
 
-let scene, camera, renderer
-let geometry, material, mesh
+class App {
+  constructor () {
+    this.threeInit()
+    this.threeAnimate()
+  }
+  threeInit () {
+    this.scene = new THREE.Scene()
 
-const init = () => {
-  scene = new THREE.Scene()
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000)
+    this.camera.position.z = 1000
 
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000)
-  camera.position.z = 1000
+    this.geometry = new THREE.BoxGeometry(200, 200, 200)
+    this.material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
 
-  geometry = new THREE.BoxGeometry(200, 200, 200)
-  material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
+    this.mesh = new THREE.Mesh(this.geometry, this.material)
+    this.scene.add(this.mesh)
 
-  mesh = new THREE.Mesh(geometry, material)
-  scene.add(mesh)
+    this.renderer = new THREE.WebGLRenderer()
+    this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-  renderer = new THREE.WebGLRenderer()
-  renderer.setSize(window.innerWidth, window.innerHeight)
+    document.body.appendChild(this.renderer.domElement)
+  }
+  threeAnimate () {
+    requestAnimationFrame(() => {
+      this.threeAnimate()
+    })
 
-  document.body.appendChild(renderer.domElement)
+    this.mesh.rotation.x += 0.01
+    this.mesh.rotation.y += 0.02
+
+    this.renderer.render(this.scene, this.camera)
+  }
 }
 
-const animate = () => {
-  requestAnimationFrame(animate)
-
-  mesh.rotation.x += 0.01
-  mesh.rotation.y += 0.02
-
-  renderer.render(scene, camera)
-}
-
-init()
-animate()
+/* eslint-disable no-new */
+new App()
