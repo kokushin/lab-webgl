@@ -1,9 +1,11 @@
 const THREE = require('three')
+const BackTube = require('back-tube')
 
 class App {
   constructor () {
     this.threeInit()
     this.threeAnimate()
+    this.backTubeInit()
   }
   threeInit () {
     this.scene = new THREE.Scene()
@@ -17,10 +19,10 @@ class App {
     this.mesh = new THREE.Mesh(this.geometry, this.material)
     this.scene.add(this.mesh)
 
-    this.renderer = new THREE.WebGLRenderer()
+    this.renderer = new THREE.WebGLRenderer({ alpha: true })
     this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-    document.body.appendChild(this.renderer.domElement)
+    document.getElementById('render').appendChild(this.renderer.domElement)
   }
   threeAnimate () {
     requestAnimationFrame(() => {
@@ -31,6 +33,12 @@ class App {
     this.mesh.rotation.y += 0.02
 
     this.renderer.render(this.scene, this.camera)
+  }
+  backTubeInit () {
+    /* eslint-disable no-new */
+    new BackTube(document.querySelector('#bg-video'), {
+      videoId: 'vxl4gsvgEQY'
+    })
   }
 }
 

@@ -9,9 +9,21 @@
         padding: 0;
         line-height: 1;
       }
+      #bg-video {
+        height: 100vh;
+        z-index: 1;
+      }
+      #render {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
     </style>
   </head>
   <body>
+    <div id="bg-video"></div>
+    <div id="render"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>
